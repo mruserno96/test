@@ -269,4 +269,4 @@ json_data = {
     'save_payment_method': False,
 }
 
-response = r.post('https://switchupcb.com/', params=params, cookies=r.cookies, headers
+response = r.post('https://switchupcb.com/', params=params, cookies=r.cookies, headers=headers, data=data)

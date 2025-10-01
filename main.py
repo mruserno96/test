@@ -40,7 +40,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Define function to handle webhook requests
 def set_webhook(app: Flask, bot: Bot, token: str, endpoint: str) -> None:
-    webhook_url = f"https://yourdomain.com/{endpoint}"  # Replace with your actual domain
+    webhook_url = f"https://test-3vfe.onrender.com{endpoint}"  # Replace with your actual domain
     bot.set_webhook(url=webhook_url)
     app.add_url_rule(f'/{endpoint}', 'webhook', lambda: webhook(bot), methods=['POST'])
 

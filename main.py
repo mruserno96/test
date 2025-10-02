@@ -10,10 +10,11 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from requests.exceptions import RequestException
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import user_agent
+from fake_useragent import UserAgent
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(name)
+logger = logging.getLogger(__name__)
 
 # Environment variables
 BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
@@ -318,7 +319,8 @@ async def buy(update: Update, context: ContextTypes.DEFAULT_TYPE):
         card_input = "4111|12|23|123"  # Replace with actual user input if needed
         user_agent_str = user_agent.generate_user_agent()
         user_cookies = {}  # Set if needed
-        user_headers = {}  # Set if neededresult = perform_purchase(card_input, user_agent_str, user_cookies, user_headers)
+        user_headers = {}  # Set if needed
+        result = perform_purchase(card_input, user_agent_str, user_cookies, user_headers)
         await update.message.reply_text(result)
     except Exception as e:
         logger.error(f"Error during purchase: {e}")

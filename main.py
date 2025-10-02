@@ -9,7 +9,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from requests.exceptions import RequestException
 from requests_toolbelt.multipart.encoder import MultipartEncoder
-from fake_useragent import UserAgent  # Import fake_useragent
+from fake_useragent import UserAgent
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -137,8 +137,7 @@ def perform_purchase(card_input, user_agent_str, user_cookies, user_headers):
     response = session.post('https://switchupcb.com/shop/i-buy/', headers=headers, data=multipart_data)
     response.raise_for_status()
 
-    # Further processing continues here...
-    return "Purchase completed successfully!"
+    # Further processing continues...
 
 # Telegram command handlers
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -168,8 +167,7 @@ async def main():
     application.add_handler(CommandHandler("ping", ping))
     application.add_handler(CommandHandler("buy", buy))
 
-    application.bot.set_webhook(WEBHOOK_URL)
-
+    # Set webhook directly without asyncio.run()
     await application.run_polling()
 
 if __name__ == "__main__":

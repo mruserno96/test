@@ -4,3 +4,4 @@ python-telegram-bot
 user-agent
 user-agents
 useragents
+fake_useragent

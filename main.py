@@ -317,7 +317,7 @@ async def buy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         # Example: ask user for card details or use default/hardcoded
         card_input = "4111|12|23|123"  # Replace with actual user input if needed
-       user_agent_str = generate_user_agent()  # This will now use fake_useragent
+        user_agent_str = generate_user_agent()
 
         user_cookies = {}  # Set if needed
         user_headers = {}  # Set if needed

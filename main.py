@@ -141,7 +141,7 @@ async def keepalive_task():
 async def handle_health(request):
     return web.Response(text="ok")
 
-# ---------- STARTUP / SHUTDOWN CALLBACKS ----------
+# ---------- STARTUP / SHUTDOWN ----------
 async def on_startup(app: Application):
     webhook_target = WEBHOOK_URL.rstrip("/") + f"/webhook/{TOKEN}"
     await app.bot.set_webhook(webhook_target)
@@ -162,17 +162,15 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("ping", ping))
 
-    # Register callbacks
-    application.post_init.append(on_startup)
-    application.post_shutdown.append(on_shutdown)
-
-    # Start webhook server
+    # ✅ FIX: use on_startup/on_shutdown parameters directly
     logger.info("Starting webhook on port %d", PORT)
     application.run_webhook(
         listen="0.0.0.0",
         port=PORT,
         url_path=f"webhook/{TOKEN}",
         webhook_url=WEBHOOK_URL.rstrip("/") + f"/webhook/{TOKEN}",
+        on_startup=[on_startup],
+        on_shutdown=[on_shutdown],
         allowed_updates=None,
     )
 

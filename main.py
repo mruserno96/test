@@ -158,16 +158,20 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("ping", ping_cmd))
 
-    application.post_init(on_startup)
-    application.post_shutdown(on_shutdown)
+# Register lifecycle callbacks
+application.post_init.append(on_startup)
+application.post_shutdown.append(on_shutdown)
 
-    logger.info("Starting webhook on port %s", PORT)
-    application.run_webhook(
-        listen="0.0.0.0",
-        port=PORT,
-        url_path=f"webhook/{TOKEN}",
-        webhook_url=WEBHOOK_URL.rstrip("/") + f"/webhook/{TOKEN}",
-    )
+# Run as webhook (Render provides HTTPS). We bind to PORT and let Telegram call /webhook/<TOKEN>.
+listen_addr = "0.0.0.0"
+logger.info("Starting webhook on port %s", PORT)
+application.run_webhook(
+    listen=listen_addr,
+    port=PORT,
+    url_path=f"webhook/{TOKEN}",
+    webhook_url=WEBHOOK_URL.rstrip("/") + f"/webhook/{TOKEN}",
+)
+
 
 if __name__ == "__main__":
     main()
